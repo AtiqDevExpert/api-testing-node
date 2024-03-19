@@ -6,7 +6,7 @@ const userRouter = require("./routes/user");
 const { connectMongoDB } = require("./connection");
 
 const dbUrl =
-  "mongodb+srv://atiqurrehman01m:tlNn3dkbCzc7jcKn@cluster0.qgeyfgv.mongodb.net/crudusers";
+  "mongodb+srv://atiqurrehman01m:tlNn3dkbCzc7jcKn@cluster0.qgeyfgv.mongodb.net/";
 
 connectMongoDB(dbUrl);
 
