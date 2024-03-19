@@ -6,7 +6,8 @@ const userRouter = require("./routes/user");
 const { connectMongoDB } = require("./connection");
 const { logReqRes } = require("./middleware");
 
-const dbUrl = "mongodb://127.0.0.1:27017/practice-db";
+const dbUrl =
+  "mongodb+srv://atiqurrehman01m:tlNn3dkbCzc7jcKn@cluster0.qgeyfgv.mongodb.net/";
 const fileName = "log.txt";
 connectMongoDB(dbUrl);
 
@@ -16,6 +17,9 @@ app.use(express.json({ extended: false }));
 // custom middleware
 app.use(logReqRes(fileName));
 // Routes
+app.get("/", (req, res) => {
+  res.send("api running new deploy");
+});
 app.use("/api/users", userRouter);
 
 app.listen(PORT, () => {
