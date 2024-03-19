@@ -17,9 +17,7 @@ app.use(express.json({ extended: false }));
 // custom middleware
 app.use(logReqRes(fileName));
 // Routes
-app.get("/", (req, res) => {
-  res.send("api running new deploy");
-});
+
 app.use("/api/users", userRouter);
 
 app.listen(PORT, () => {
