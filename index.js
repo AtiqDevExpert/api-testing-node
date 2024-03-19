@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const PORT = 9100;
+const PORT = 8000;
 
 const userRouter = require("./routes/user");
 const { connectMongoDB } = require("./connection");
