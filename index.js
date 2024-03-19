@@ -7,7 +7,7 @@ const { connectMongoDB } = require("./connection");
 const { logReqRes } = require("./middleware");
 
 const dbUrl =
-  "mongodb+srv://atiqurrehman01m:tlNn3dkbCzc7jcKn@cluster0.qgeyfgv.mongodb.net/";
+  "mongodb+srv://atiqurrehman01m:tlNn3dkbCzc7jcKn@cluster0.qgeyfgv.mongodb.net/crudusers";
 const fileName = "log.txt";
 connectMongoDB(dbUrl);
 
