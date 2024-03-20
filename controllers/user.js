@@ -46,34 +46,58 @@ const handleDeleteUserbyId = async (req, res) => {
   }
 };
 const handleCreateNewUser = async (req, res) => {
-  const isNewUser = users.findOne({ email: req.body.email });
-  if (!isNewUser) {
-    const body = req.body;
-    if (
-      !body &&
-      !body.first_name &&
-      !body.last_name &&
-      !body.email &&
-      !body.job_title &&
-      !body.gender
-    ) {
-      return res.status(400).json({ error: "All fields are required" });
-    } else {
-      const result = await users.create({
-        first_name: body.first_name,
-        last_name: body.last_name,
-        email: body.email,
-        job_title: body.job_title,
-        gender: body.gender,
-      });
-      return res
-        .status(201)
-        .json({ User: result, message: "User Created Successfuly" });
+  const { first_name, last_name, email, job_title, gender } = req.body;
+  if (email) {
+    const isEmailInUsed = users.isThisEmailInUse(email);
+    if (isEmailInUsed) {
+      return res.status(409).json({ error: "Email already in used" });
     }
+  }
+
+  if (!first_name || last_name || !email || !job_title || !gender) {
+    return res.status(400).json({ error: "All fields are required" });
   } else {
-    return res.status(409).json({ error: "Email already in use" });
+    const result = await users.create({
+      first_name: first_name,
+      last_name: last_name,
+      email: email,
+      job_title: job_title,
+      gender: gender,
+    });
+    return res
+      .status(201)
+      .json({ User: result, message: "User Created Successfuly" });
   }
 };
+// const handleCreateNewUser = async (req, res) => {
+//   const isNewUser = users.findOne({ email: req.body.email });
+//   if (!isNewUser) {
+//     const body = req.body;
+//     if (
+//       !body &&
+//       !body.first_name &&
+//       !body.last_name &&
+//       !body.email &&
+//       !body.job_title &&
+//       !body.gender
+//     ) {
+//       return res.status(400).json({ error: "All fields are required" });
+//     } else {
+//       const result = await users.create({
+//         first_name: body.first_name,
+//         last_name: body.last_name,
+//         email: body.email,
+//         job_title: body.job_title,
+//         gender: body.gender,
+//       });
+//       return res
+//         .status(201)
+//         .json({ User: result, message: "User Created Successfuly" });
+//     }
+//   } else {
+//     return res.status(409).json({ error: "Email already in use" });
+//   }
+// };
 module.exports = {
   handleGetAllUsers,
   handleGetUserById,

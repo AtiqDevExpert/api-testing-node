@@ -26,6 +26,15 @@ const usersSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+usersSchema.statics.isThisEmailInUse = async function (email) {
+  try {
+    const isUserExits = await this.findOne({ email });
+    if (isUserExits) return false;
+    return true;
+  } catch (error) {
+    console.log("Error in method", error.message);
+  }
+};
 const users = mongoose.model("users", usersSchema);
 
 module.exports = users;
