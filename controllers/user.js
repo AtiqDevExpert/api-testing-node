@@ -46,27 +46,32 @@ const handleDeleteUserbyId = async (req, res) => {
   }
 };
 const handleCreateNewUser = async (req, res) => {
-  const body = req.body;
-  if (
-    !body &&
-    !body.first_name &&
-    !body.last_name &&
-    !body.email &&
-    !body.job_title &&
-    !body.gender
-  ) {
-    return res.status(400).json({ error: "All fields are required" });
+  const isNewUser = users.findOne({ email: req.body.email });
+  if (!isNewUser) {
+    const body = req.body;
+    if (
+      !body &&
+      !body.first_name &&
+      !body.last_name &&
+      !body.email &&
+      !body.job_title &&
+      !body.gender
+    ) {
+      return res.status(400).json({ error: "All fields are required" });
+    } else {
+      const result = await users.create({
+        first_name: body.first_name,
+        last_name: body.last_name,
+        email: body.email,
+        job_title: body.job_title,
+        gender: body.gender,
+      });
+      return res
+        .status(201)
+        .json({ User: result, message: "User Created Successfuly" });
+    }
   } else {
-    const result = await users.create({
-      first_name: body.first_name,
-      last_name: body.last_name,
-      email: body.email,
-      job_title: body.job_title,
-      gender: body.gender,
-    });
-    return res
-      .status(201)
-      .json({ User: result, message: "User Created Successfuly" });
+    return res.status(409).json({ error: "Email already in use" });
   }
 };
 module.exports = {
